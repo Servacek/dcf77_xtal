@@ -1712,20 +1712,20 @@ namespace Internal {
         const uint8_t OCR2A_faster = OCR2A_standard - 1;
 
         void init_timer_2() {
-            // Timer 2 CTC mode, prescaler 64
-            TCCR2B = (0<<WGM22) | (1<<CS22);
-            TCCR2A = (1<<WGM21) | (0<<WGM20);
+            // // Timer 2 CTC mode, prescaler 64
+            // TCCR2B = (0<<WGM22) | (1<<CS22);
+            // TCCR2A = (1<<WGM21) | (0<<WGM20);
 
-            OCR2A = OCR2A_standard;
+            // OCR2A = OCR2A_standard;
 
-            // enable Timer 2 interrupts
-            TIMSK2 = (1<<OCIE2A);
+            // // enable Timer 2 interrupts
+            // TIMSK2 = (1<<OCIE2A);
         }
 
         void stop_timer_0() {
             // ensure that the standard timer interrupts will not
             // mess with msTimer2
-            TIMSK0 = 0;
+            // TIMSK0 = 0;
         }
 
         void setup(const Clock::input_provider_t input_provider) {
@@ -1933,18 +1933,18 @@ namespace Internal {
     }
 }
 
-#if defined(__AVR_ATmega168__)  || \
-    defined(__AVR_ATmega48__)   || \
-    defined(__AVR_ATmega88__)   || \
-    defined(__AVR_ATmega328P__) || \
-    defined(__AVR_ATmega1280__) || \
-    defined(__AVR_ATmega2560__) || \
-    defined(__AVR_AT90USB646__) || \
-    defined(__AVR_AT90USB1286__)
-ISR(TIMER2_COMPA_vect) {
-    Internal::Generic_1_kHz_Generator::isr_handler();
-}
-#endif
+// #if defined(__AVR_ATmega168__)  || \
+//     defined(__AVR_ATmega48__)   || \
+//     defined(__AVR_ATmega88__)   || \
+//     defined(__AVR_ATmega328P__) || \
+//     defined(__AVR_ATmega1280__) || \
+//     defined(__AVR_ATmega2560__) || \
+//     defined(__AVR_AT90USB646__) || \
+//     defined(__AVR_AT90USB1286__)
+// ISR(TIMER2_COMPA_vect) {
+//     Internal::Generic_1_kHz_Generator::isr_handler();
+// }
+// #endif
 
 #if defined(__AVR_ATmega32U4__)
 ISR(TIMER3_COMPA_vect) {
