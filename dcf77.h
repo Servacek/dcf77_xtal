@@ -1839,7 +1839,7 @@ namespace Internal {
 
     // Dummy class to parametrize a clock controller without frequency control
     struct DCF77_No_Frequency_Control {
-        static void process_1_Hz_tick(const DCF77_Encoder &decoded_time);
+        static void process_1_Hz_tick();
         static void process_1_kHz_tick();
 
         static void qualify_calibration();

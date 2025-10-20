@@ -1186,7 +1186,7 @@ namespace Internal {  // DCF77_Encoder
             case 59:
                 // special handling for leap seconds
                 if (leap_second_scheduled && minute.val == 0) { result = 0; break; }
-                // standard case: fall through to "sync_mark"
+                return sync_mark;
             case 60:
                 return sync_mark;
 
@@ -1653,7 +1653,7 @@ namespace Internal {  // DCF77_Frequency_Control
         sprintln(F(" ticks mod 60000"));
     }
 
-    void DCF77_No_Frequency_Control::process_1_Hz_tick(const DCF77_Encoder &decoded_time) {}
+    void DCF77_No_Frequency_Control::process_1_Hz_tick() {}
     void DCF77_No_Frequency_Control::process_1_kHz_tick() {}
     void DCF77_No_Frequency_Control::qualify_calibration() {}
     void DCF77_No_Frequency_Control::unqualify_calibration() {}
@@ -1683,10 +1683,10 @@ namespace Internal {
                 const int16_t pp16m = adjust_pp16m;
                 return pp16m;
             }
-            #if defined(ARDUINO_ARCH_ESP8266)
+            // #if defined(ARDUINO_ARCH_ESP8266)
             //Workaround to [-Werror=return-type]
             return 0;
-            #endif
+            // #endif
         }
 
         #if defined(__AVR_ATmega168__)  || \
@@ -1933,18 +1933,20 @@ namespace Internal {
     }
 }
 
-// #if defined(__AVR_ATmega168__)  || \
-//     defined(__AVR_ATmega48__)   || \
-//     defined(__AVR_ATmega88__)   || \
-//     defined(__AVR_ATmega328P__) || \
-//     defined(__AVR_ATmega1280__) || \
-//     defined(__AVR_ATmega2560__) || \
-//     defined(__AVR_AT90USB646__) || \
-//     defined(__AVR_AT90USB1286__)
-// ISR(TIMER2_COMPA_vect) {
-//     Internal::Generic_1_kHz_Generator::isr_handler();
-// }
-// #endif
+/*
+#if defined(__AVR_ATmega168__)  || \
+    defined(__AVR_ATmega48__)   || \
+    defined(__AVR_ATmega88__)   || \
+    defined(__AVR_ATmega328P__) || \
+    defined(__AVR_ATmega1280__) || \
+    defined(__AVR_ATmega2560__) || \
+    defined(__AVR_AT90USB646__) || \
+    defined(__AVR_AT90USB1286__)
+ISR(TIMER2_COMPA_vect) {
+    Internal::Generic_1_kHz_Generator::isr_handler();
+}
+#endif
+*/
 
 #if defined(__AVR_ATmega32U4__)
 ISR(TIMER3_COMPA_vect) {
