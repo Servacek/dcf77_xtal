@@ -757,8 +757,8 @@ namespace Internal {
                 }
 
                 // create compile time error if we encounter an unexpectedt type
-                typedef bool assert_type_is_known[TMP::equal<noise_type, uint8_t>::val ||
-                                                  TMP::equal<noise_type, uint32_t>::val ? 0: -1];
+                // typedef bool assert_type_is_known[TMP::equal<noise_type, uint8_t>::val ||
+                //                                   TMP::equal<noise_type, uint32_t>::val ? 0: -1];
             }
 
             void debug() {
@@ -1160,14 +1160,14 @@ namespace Internal {
         struct dummy_stage {
             void    reset()                            const {}
             void    reduce(const uint8_t sampled_data) const {}
-            #if defined(ARDUINO_ARCH_ESP8266)
+            // #if defined(ARDUINO_ARCH_ESP8266)
             //Workaround to [-Werror=return-type]
             bool    data_ready()                       const {return 0;}
             uint8_t avg()                              const {return 0;}
-            #else
-            bool    data_ready()                       const {}
-            uint8_t avg()                              const {}
-            #endif
+            // #else
+            // bool    data_ready()                       const {}
+            // uint8_t avg()                              const {}
+            // #endif
         };
 
         static const bool requires_averages = samples_per_bin > 1;
@@ -1720,7 +1720,7 @@ namespace Internal {
             volatile uint16_t elapsed_minutes;
             volatile uint16_t elapsed_ticks_mod_60000;
 
-            void start(const uint8_t minute_mod_10) {
+            void start() {
                 elapsed_ticks_mod_60000 = 0;
                 elapsed_minutes = 0;
             }
@@ -1734,7 +1734,7 @@ namespace Internal {
                 }
             }
 
-            int16_t compute_phase_deviation(uint8_t current_second, uint8_t current_minute_mod_10) {
+            int16_t compute_phase_deviation(uint8_t current_second) {
                 int32_t deviation =
                         ((int32_t) elapsed_ticks_mod_60000) -
                         ((int32_t) current_second - (int32_t) calibration_second) * 1000;
@@ -1761,7 +1761,7 @@ namespace Internal {
             uint8_t divider = 0;
 
             void start(const uint8_t minute_mod_10) {
-                generic_deviation_tracker_t::start(minute_mod_10);
+                generic_deviation_tracker_t::start();
                 start_minute_mod_10 = minute_mod_10;
             }
 
